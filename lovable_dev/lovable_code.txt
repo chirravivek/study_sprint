@@ -1,0 +1,76 @@
+import React, { useState, useEffect } from 'react';
+            <FileUpload onUpload={handleUpload} isLoading={loading} />
+          </div>
+        ) : (
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-t-2xl shadow-xl p-6">
+              <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
+                <div>
+                  <h2 className="text-2xl font-bold mb-1">Your Study Roadmap</h2>
+                  <p className="text-gray-600">
+                    {completedWeeks.length > 0 ? (
+                      <>
+                        <span className="font-medium text-genz-purple">
+                          {completedWeeks.length}/{roadmap.length} weeks completed
+                        </span> - Keep up the great work! 🚀
+                      </>
+                    ) : (
+                      <>Start your learning journey by exploring Week 1</>
+                    )}
+                  </p>
+                </div>
+                
+                <div className="flex gap-3">
+                  <Button 
+                    onClick={handleDownload}
+                    className="bg-genz-blue hover:bg-blue-700 text-white flex gap-2 items-center"
+                  >
+                    <Download size={16} />
+                    Download
+                  </Button>
+                  <Button 
+                    onClick={handleReset}
+                    variant="outline"
+                    className="flex gap-2 items-center"
+                  >
+                    <RefreshCw size={16} />
+                    New Syllabus
+                  </Button>
+                </div>
+              </div>
+              
+              {roadmap.length > 0 && (
+                <div className="relative roadmap-container overflow-y-auto max-h-[60vh] px-4">
+                  {roadmap.map((week, index) => (
+                    <WeekCard 
+                      key={week.week} 
+                      weekData={week} 
+                      isActive={activeWeek?.week === week.week}
+                      onClick={() => handleWeekClick(week)}
+                      isCompleted={completedWeeks.includes(week.week)}
+                      isLast={index === roadmap.length - 1}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            <div className="bg-gradient-to-r from-genz-purple to-genz-pink text-white p-4 rounded-b-2xl text-center">
+              <p className="font-medium">
+                Your AI study plan is ready, let's ace this! 🧠💥
+              </p>
+            </div>
+          </div>
+        )}
+      </main>
+      
+      <WeekModal 
+        weekData={activeWeek} 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+      />
+    </div>
+  );
+};
+
+export default Index;
